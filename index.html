@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tugendane — Kigali transit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Plus Jakarta Sans", "system-ui", "sans-serif"] },
+            colors: {
+              transit: { DEFAULT: "#075A45", deep: "#04261C", mist: "#E7F6F0" },
+              fintech: { DEFAULT: "#0A7CA8", deep: "#07597A" },
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/tugendane.css" />
+  </head>
+  <body class="font-sans antialiased">
+    <div class="app-shell relative mx-auto w-full max-w-[430px] overflow-hidden bg-[#05261d]">
+      <header class="flex items-center justify-between px-5 pt-5 text-[11px] font-semibold tracking-wide text-emerald-100/70">
+        <span id="clock">09:41</span>
+        <span class="rounded-full bg-white/10 px-2 py-0.5 text-[10px] uppercase tracking-[0.18em] text-sky-200">Tugendane</span>
+        <span>5G · 92%</span>
+      </header>
+
+      <section id="screen-register" class="screen-enter hidden px-5 pb-10 pt-8">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-sky-300">Murakaza neza</p>
+        <h1 class="mt-2 text-3xl font-extrabold leading-tight text-white">Create your Tugendane account</h1>
+        <p class="mt-3 text-sm leading-6 text-emerald-100/75">
+          Built for Rwandans and anyone in Rwanda who uses public transport — buses, parks, Tap&Go, and the road around you.
+        </p>
+
+        <form id="register-form" class="mt-8 space-y-4">
+          <label class="block">
+            <span class="mb-1.5 block text-xs font-semibold text-emerald-100/80">Full names</span>
+            <input name="names" required placeholder="e.g. Keza Diane" class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white outline-none ring-sky-400 placeholder:text-emerald-100/35 focus:ring-2" />
+          </label>
+          <label class="block">
+            <span class="mb-1.5 block text-xs font-semibold text-emerald-100/80">Telephone number</span>
+            <input name="phone" required type="tel" placeholder="0788 000 000" class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white outline-none ring-sky-400 placeholder:text-emerald-100/35 focus:ring-2" />
+          </label>
+          <label class="block">
+            <span class="mb-1.5 block text-xs font-semibold text-emerald-100/80">Email</span>
+            <input name="email" required type="email" placeholder="you@email.com" class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white outline-none ring-sky-400 placeholder:text-emerald-100/35 focus:ring-2" />
+          </label>
+          <button type="submit" class="mt-4 w-full rounded-2xl bg-gradient-to-r from-transit to-fintech py-4 text-sm font-bold text-white shadow-lg shadow-emerald-900/40">
+            Continue
+          </button>
+        </form>
+      </section>
+
+      <section id="screen-guide" class="screen-enter hidden px-5 pb-10 pt-8">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-sky-300">How Tugendane works</p>
+        <h2 class="mt-2 text-3xl font-extrabold text-white">A short guide for Kigali commuters</h2>
+        <p class="mt-3 text-sm text-emerald-100/75">Swipe through, then unlock the full app.</p>
+
+        <div id="guide-card" class="mt-8 rounded-[28px] border border-white/10 bg-white/5 p-6"></div>
+        <div class="mt-5 flex items-center justify-center gap-2" id="guide-dots"></div>
+        <button id="guide-next" class="mt-6 w-full rounded-2xl bg-gradient-to-r from-transit to-fintech py-4 text-sm font-bold text-white">
+          Next
+        </button>
+      </section>
+
+      <section id="screen-pay" class="screen-enter hidden px-5 pb-10 pt-8">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-sky-300">Premium access</p>
+        <h2 class="mt-2 text-3xl font-extrabold text-white">Pay 2,000 RWF / month</h2>
+        <p class="mt-3 text-sm leading-6 text-emerald-100/75">
+          One monthly credit opens live buses, nearby parks, places, Tap&Go top-up, and your route planner.
+        </p>
+
+        <div class="mt-8 rounded-[28px] border border-white/10 bg-white/5 p-5">
+          <div class="flex items-end justify-between">
+            <div>
+              <p class="text-xs text-emerald-100/60">Tugendane Pass</p>
+              <p class="text-3xl font-extrabold text-white">2,000 <span class="text-base font-semibold text-sky-200">RWF</span></p>
+            </div>
+            <span class="rounded-full bg-emerald-400/15 px-3 py-1 text-[11px] font-bold text-emerald-300">30 days</span>
+          </div>
+          <ul class="mt-4 space-y-2 text-sm text-emerald-50/80">
+            <li>• Live GPS buses and remaining seats</li>
+            <li>• Nearby parks, restaurants, and landmarks</li>
+            <li>• In-app Tap&Go wallet when cashiers are far</li>
+          </ul>
+        </div>
+
+        <p class="mt-6 text-xs font-semibold text-emerald-100/70">Pay with</p>
+        <div class="mt-2 grid grid-cols-2 gap-3">
+          <button type="button" data-wallet="mtn" class="wallet-btn momo-mtn rounded-2xl px-3 py-4 text-sm font-extrabold">MTN MoMo</button>
+          <button type="button" data-wallet="airtel" class="wallet-btn momo-airtel rounded-2xl px-3 py-4 text-sm font-extrabold">Airtel Money</button>
+        </div>
+        <p id="wallet-choice" class="mt-3 text-center text-xs text-sky-200">Choose MTN MoMo or Airtel Money</p>
+        <button id="pay-btn" class="mt-5 w-full rounded-2xl bg-white py-4 text-sm font-bold text-transit-deep">
+          Pay 2,000 RWF
+        </button>
+      </section>
+
+      <section id="screen-home" class="hidden pb-28 pt-4">
+        <div class="px-5">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs text-emerald-100/60">Murakaza neza</p>
+              <h2 id="home-name" class="text-2xl font-extrabold text-white">Commuter</h2>
+            </div>
+            <button id="profile-btn" class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-transit to-fintech text-sm font-bold">
+              TG
+            </button>
+          </div>
+
+          <a href="tapgo.html" class="balance-shine mt-5 block rounded-[28px] p-5 text-white shadow-xl">
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70">Tap&Go wallet</p>
+                <p id="home-balance" class="mt-2 text-3xl font-extrabold">4,500 RWF</p>
+              </div>
+              <span class="rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold">Add money →</span>
+            </div>
+            <p class="mt-4 text-xs text-white/75">Use this balance on your journey when the cashier is far from the stop.</p>
+          </a>
+
+          <div class="mt-4 rounded-[24px] border border-white/10 bg-white/5 p-4">
+            <div class="flex items-center gap-3">
+              <span class="relative flex h-3 w-3">
+                <span class="pulse-dot absolute inline-flex h-full w-full rounded-full bg-sky-400"></span>
+                <span class="relative inline-flex h-3 w-3 rounded-full bg-emerald-400"></span>
+              </span>
+              <div>
+                <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-sky-300">Live location</p>
+                <p class="text-sm font-bold text-white">Near Kicukiro Centre</p>
+              </div>
+            </div>
+            <div class="map-grid relative mt-3 h-28 overflow-hidden rounded-2xl">
+              <div class="absolute left-[58%] top-[42%] h-3 w-3 -translate-x-1/2 rounded-full bg-sky-400 shadow-[0_0_0_8px_rgba(14,165,233,0.25)]"></div>
+              <p class="absolute bottom-2 left-3 text-[10px] font-semibold text-emerald-100/80">Kicukiro · KK 15 Ave</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 px-5">
+          <div class="mb-3 flex items-end justify-between">
+            <h3 class="text-lg font-bold text-white">Bus parks near you</h3>
+            <a href="routes.html" class="text-xs font-semibold text-sky-300">See routes</a>
+          </div>
+          <div class="space-y-3" id="parks"></div>
+        </div>
+
+        <div class="mt-6 px-5">
+          <h3 class="mb-3 text-lg font-bold text-white">Route tariffs</h3>
+          <div class="overflow-hidden rounded-[24px] border border-white/10 bg-white/5" id="tariffs"></div>
+        </div>
+        <div id="home-nav"></div>
+      </section>
+
+      <div id="profile-sheet" class="fixed inset-0 z-50 hidden max-w-[430px] mx-auto">
+        <div class="absolute inset-0 bg-black/50" data-close-profile></div>
+        <div class="absolute bottom-0 w-full rounded-t-[28px] bg-[#07352a] p-6">
+          <h3 class="text-lg font-bold">Your profile</h3>
+          <dl class="mt-4 space-y-3 text-sm" id="profile-fields"></dl>
+          <button data-close-profile class="mt-5 w-full rounded-2xl bg-white/10 py-3 text-sm font-semibold">Close</button>
+        </div>
+      </div>
+
+      <div id="pay-loading" class="fixed inset-0 z-50 hidden max-w-[430px] mx-auto bg-[#04261c]/95 px-8">
+        <div class="flex h-full flex-col items-center justify-center text-center">
+          <div class="h-14 w-14 animate-spin rounded-full border-4 border-white/15 border-t-sky-400"></div>
+          <p class="mt-6 text-lg font-bold text-white" id="loading-title">Connecting to MTN MoMo…</p>
+          <p class="mt-2 text-sm text-emerald-100/70">Confirm 2,000 RWF on your phone. This is a prototype loading state.</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+      const screens = {
+        register: document.getElementById("screen-register"),
+        guide: document.getElementById("screen-guide"),
+        pay: document.getElementById("screen-pay"),
+        home: document.getElementById("screen-home"),
+      };
+
+      function show(name) {
+        Object.values(screens).forEach((el) => el.classList.add("hidden"));
+        screens[name].classList.remove("hidden");
+        screens[name].classList.add("screen-enter");
+      }
+
+      function tickClock() {
+        const now = new Date();
+        document.getElementById("clock").textContent = now.toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+      tickClock();
+      setInterval(tickClock, 10000);
+
+      const slides = [
+        {
+          title: "Live buses, real timing",
+          body: "See the bus you want, when it will land at your stop, remaining seats, and how long the ride to your destination should take.",
+        },
+        {
+          title: "Know where you are",
+          body: "Kigali roads can be confusing. Tugendane shows restaurants and well-known places near you so a live map actually makes sense.",
+        },
+        {
+          title: "Tap&Go from the app",
+          body: "Some stops are far from cashiers. Top up your in-app wallet and use that credit on the journey.",
+        },
+        {
+          title: "Shape the next version",
+          body: "Tell us what you look forward to. Your ideas stay on the Ideas page so the product grows with commuters.",
+        },
+      ];
+      let slideIndex = 0;
+      const guideCard = document.getElementById("guide-card");
+      const guideDots = document.getElementById("guide-dots");
+      const guideNext = document.getElementById("guide-next");
+
+      function renderGuide() {
+        const s = slides[slideIndex];
+        guideCard.innerHTML = `
+          <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-sky-300">Step ${slideIndex + 1} of ${slides.length}</p>
+          <h3 class="mt-3 text-2xl font-extrabold text-white">${s.title}</h3>
+          <p class="mt-3 text-sm leading-6 text-emerald-100/80">${s.body}</p>`;
+        guideDots.innerHTML = slides
+          .map((_, i) => `<span class="h-1.5 rounded-full ${i === slideIndex ? "w-6 bg-sky-400" : "w-1.5 bg-white/25"}"></span>`)
+          .join("");
+        guideNext.textContent = slideIndex === slides.length - 1 ? "Continue to payment" : "Next";
+      }
+
+      guideNext.addEventListener("click", () => {
+        if (slideIndex < slides.length - 1) {
+          slideIndex += 1;
+          renderGuide();
+        } else {
+          show("pay");
+        }
+      });
+
+      document.getElementById("register-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.target));
+        Tugendane.saveUser({
+          names: data.names.trim(),
+          phone: data.phone.trim(),
+          email: data.email.trim(),
+        });
+        show("guide");
+        renderGuide();
+      });
+
+      let selectedWallet = "mtn";
+      document.querySelectorAll(".wallet-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          selectedWallet = btn.dataset.wallet;
+          document.getElementById("wallet-choice").textContent =
+            selectedWallet === "mtn" ? "Paying with MTN MoMo" : "Paying with Airtel Money";
+        });
+      });
+
+      document.getElementById("pay-btn").addEventListener("click", () => {
+        const overlay = document.getElementById("pay-loading");
+        const title = document.getElementById("loading-title");
+        title.textContent = selectedWallet === "mtn" ? "Connecting to MTN MoMo…" : "Connecting to Airtel Money…";
+        overlay.classList.remove("hidden");
+        setTimeout(() => {
+          title.textContent = "Payment confirmed";
+          overlay.querySelector(".animate-spin").classList.add("hidden");
+          Tugendane.markPaid();
+          setTimeout(() => {
+            overlay.classList.add("hidden");
+            bootHome();
+          }, 700);
+        }, 2200);
+      });
+
+      const parks = [
+        { name: "Kicukiro Centre Park", walk: "2 min walk", buses: "305 · 402 · 201" },
+        { name: "Sonatubes Stop", walk: "8 min walk", buses: "204 · 311" },
+        { name: "Gikondo Terminal", walk: "14 min walk", buses: "102 · 305" },
+      ];
+      const tariffs = [
+        ["Kicukiro → Nyabugogo", "410 RWF"],
+        ["Kicukiro → Downtown", "310 RWF"],
+        ["Kicukiro → Remera", "310 RWF"],
+        ["Kanombe → Town", "410 RWF"],
+        ["Nyabugogo → Kimironko", "310 RWF"],
+      ];
+
+      function bootHome() {
+        show("home");
+        const user = Tugendane.getUser() || { names: "Commuter", email: "", phone: "" };
+        const first = user.names.split(" ")[0];
+        document.getElementById("home-name").textContent = first;
+        document.getElementById("profile-btn").textContent = first.slice(0, 2).toUpperCase();
+        const balance = Tugendane.getBalance() ?? 4500;
+        if (Tugendane.getBalance() === null) Tugendane.setBalance(4500);
+        document.getElementById("home-balance").textContent = Tugendane.formatRwf(balance);
+        document.getElementById("home-nav").innerHTML = Tugendane.nav("home");
+        document.getElementById("parks").innerHTML = parks
+          .map(
+            (p) => `
+            <a href="routes.html" class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+              <div>
+                <p class="text-sm font-bold text-white">${p.name}</p>
+                <p class="text-xs text-emerald-100/60">${p.buses}</p>
+              </div>
+              <span class="text-xs font-semibold text-sky-300">${p.walk}</span>
+            </a>`
+          )
+          .join("");
+        document.getElementById("tariffs").innerHTML = tariffs
+          .map(
+            ([route, price], i) => `
+            <div class="flex items-center justify-between px-4 py-3 ${i ? "border-t border-white/10" : ""}">
+              <span class="text-sm text-emerald-50">${route}</span>
+              <span class="text-sm font-bold text-sky-200">${price}</span>
+            </div>`
+          )
+          .join("");
+        document.getElementById("profile-fields").innerHTML = `
+          <div class="flex justify-between"><dt class="text-emerald-100/60">Names</dt><dd>${user.names}</dd></div>
+          <div class="flex justify-between"><dt class="text-emerald-100/60">Phone</dt><dd>${user.phone}</dd></div>
+          <div class="flex justify-between"><dt class="text-emerald-100/60">Email</dt><dd>${user.email}</dd></div>`;
+      }
+
+      document.getElementById("profile-btn").addEventListener("click", () => {
+        document.getElementById("profile-sheet").classList.remove("hidden");
+      });
+      document.querySelectorAll("[data-close-profile]").forEach((el) => {
+        el.addEventListener("click", () => document.getElementById("profile-sheet").classList.add("hidden"));
+      });
+
+      if (Tugendane.isPaid() && Tugendane.getUser()) {
+        bootHome();
+      } else {
+        show("register");
+      }
+    </script>
+  </body>
+</html>

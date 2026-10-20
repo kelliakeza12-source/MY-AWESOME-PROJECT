@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find your route — Tugendane</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Plus Jakarta Sans", "system-ui", "sans-serif"] },
+            colors: { transit: { DEFAULT: "#075A45" }, fintech: { DEFAULT: "#0A7CA8" } },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/tugendane.css" />
+  </head>
+  <body class="font-sans antialiased">
+    <div class="app-shell relative mx-auto w-full max-w-[430px] overflow-hidden bg-[#05261d] pb-28">
+      <header class="px-5 pt-6">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">Live network</p>
+        <h1 class="mt-1 text-3xl font-extrabold text-white">Find your bus</h1>
+        <p class="mt-2 text-sm leading-6 text-emerald-100/75">
+          Prototype GPS: arrivals, empty seats, and ride time are simulated so you can leave for the stop early.
+        </p>
+      </header>
+
+      <form id="search" class="mt-5 space-y-3 px-5">
+        <input id="from" value="Kicukiro Centre" class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white outline-none ring-sky-400 focus:ring-2" />
+        <input id="to" value="Nyabugogo" class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white outline-none ring-sky-400 focus:ring-2" />
+        <button class="w-full rounded-2xl bg-gradient-to-r from-transit to-fintech py-3.5 text-sm font-bold text-white">Search live buses</button>
+      </form>
+
+      <div class="mt-5 px-5">
+        <div class="overflow-hidden rounded-[24px] border border-white/10">
+          <iframe
+            title="Live map near Kicukiro Centre"
+            class="h-52 w-full"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=Kicukiro%20Centre%20Kigali&z=14&output=embed"
+          ></iframe>
+        </div>
+        <p class="mt-2 text-[11px] text-emerald-100/55">Google Map centred on Kicukiro Centre. Bus pins below are demo GPS.</p>
+      </div>
+
+      <section class="mt-6 px-5">
+        <div class="mb-3 flex items-end justify-between">
+          <h2 class="text-lg font-bold text-white">Buses to your stop</h2>
+          <span class="text-[11px] font-semibold text-emerald-300" id="live-flag">● Live</span>
+        </div>
+        <div id="buses" class="space-y-3"></div>
+      </section>
+      <div id="nav"></div>
+    </div>
+    <script src="js/app.js"></script>
+    <script>
+      Tugendane.requirePaid();
+      document.getElementById("nav").innerHTML = Tugendane.nav("routes");
+
+      const fleet = [
+        { id: "305", name: "Kicukiro → Nyabugogo", eta: 4, seats: 7, ride: 28, fare: 410 },
+        { id: "201", name: "Kicukiro → Downtown", eta: 9, seats: 2, ride: 22, fare: 310 },
+        { id: "402", name: "Sonatubes → Remera", eta: 13, seats: 11, ride: 25, fare: 310 },
+        { id: "311", name: "Gikondo → Kimironko", eta: 18, seats: 5, ride: 31, fare: 310 },
+      ];
+
+      function renderBuses() {
+        document.getElementById("buses").innerHTML = fleet
+          .map(
+            (bus) => `
+            <article class="rounded-[24px] border border-white/10 bg-white/5 p-4">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-sky-300">Bus ${bus.id}</p>
+                  <h3 class="mt-1 text-sm font-bold text-white">${bus.name}</h3>
+                </div>
+                <span class="rounded-full bg-emerald-400/15 px-2.5 py-1 text-xs font-bold text-emerald-300">${bus.eta} min</span>
+              </div>
+              <dl class="mt-3 grid grid-cols-3 gap-2 text-center text-[11px]">
+                <div class="rounded-xl bg-black/20 py-2">
+                  <dt class="text-emerald-100/50">Seats left</dt>
+                  <dd class="font-bold text-white">${bus.seats}</dd>
+                </div>
+                <div class="rounded-xl bg-black/20 py-2">
+                  <dt class="text-emerald-100/50">Ride time</dt>
+                  <dd class="font-bold text-white">${bus.ride} min</dd>
+                </div>
+                <div class="rounded-xl bg-black/20 py-2">
+                  <dt class="text-emerald-100/50">Tariff</dt>
+                  <dd class="font-bold text-white">${bus.fare}</dd>
+                </div>
+              </dl>
+              <p class="mt-3 text-xs text-emerald-100/70">Leave now if you need ${Math.max(bus.eta - 2, 1)} extra minutes to reach the park.</p>
+            </article>`
+          )
+          .join("");
+      }
+
+      renderBuses();
+      setInterval(() => {
+        fleet.forEach((bus) => {
+          bus.eta = Math.max(1, bus.eta - (Math.random() > 0.45 ? 1 : 0));
+          if (bus.eta === 1 && Math.random() > 0.7) {
+            bus.eta = 12 + Math.floor(Math.random() * 10);
+            bus.seats = 3 + Math.floor(Math.random() * 14);
+          }
+        });
+        renderBuses();
+      }, 4000);
+
+      document.getElementById("search").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const dest = document.getElementById("to").value.trim() || "your stop";
+        fleet.forEach((bus, i) => {
+          bus.name = `${document.getElementById("from").value.trim() || "Kicukiro"} → ${dest}`;
+          bus.eta = 3 + i * 4 + Math.floor(Math.random() * 3);
+        });
+        renderBuses();
+      });
+    </script>
+  </body>
+</html>

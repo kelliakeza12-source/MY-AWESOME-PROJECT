@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Places near you — Tugendane</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Plus Jakarta Sans", "system-ui", "sans-serif"] },
+            colors: { transit: { DEFAULT: "#075A45", deep: "#04261C" }, fintech: { DEFAULT: "#0A7CA8" } },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/tugendane.css" />
+  </head>
+  <body class="font-sans antialiased">
+    <div class="app-shell relative mx-auto w-full max-w-[430px] overflow-hidden bg-[#05261d] pb-28">
+      <header class="px-5 pt-6">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">Around you</p>
+        <h1 class="mt-1 text-3xl font-extrabold text-white">Places & restaurants</h1>
+        <p class="mt-2 text-sm leading-6 text-emerald-100/75">
+          If the live map feels abstract, these landmarks help you read Kicukiro and nearby roads.
+        </p>
+      </header>
+
+      <section class="mt-6 px-5">
+        <h2 class="mb-3 text-lg font-bold text-white">Restaurants nearby</h2>
+        <div id="food" class="space-y-3"></div>
+      </section>
+
+      <section class="mt-7 px-5">
+        <h2 class="mb-3 text-lg font-bold text-white">Well-known places</h2>
+        <div id="places" class="space-y-3"></div>
+      </section>
+
+      <section class="mt-7 px-5">
+        <h2 class="mb-3 text-lg font-bold text-white">Connect to Tap&Go</h2>
+        <div class="space-y-3 rounded-[24px] border border-white/10 bg-white/5 p-5 text-sm leading-6 text-emerald-50/90">
+          <p><span class="font-bold text-sky-300">1.</span> Buy or already hold a Tap&Go card from a kiosk, or use the in-app wallet.</p>
+          <p><span class="font-bold text-sky-300">2.</span> Open <a class="underline" href="tapgo.html">Add money</a> and load credit with MoMo or Airtel.</p>
+          <p><span class="font-bold text-sky-300">3.</span> At the validator, tap once when you board. Fare follows the route tariff.</p>
+          <p><span class="font-bold text-sky-300">4.</span> Keep a little extra on the card — some parks sit far from cashiers.</p>
+        </div>
+        <a href="tapgo.html" class="mt-4 flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-transit to-fintech py-4 text-sm font-bold text-white">Open Tap&Go wallet</a>
+      </section>
+      <div id="nav"></div>
+    </div>
+    <script src="js/app.js"></script>
+    <script>
+      Tugendane.requirePaid();
+      document.getElementById("nav").innerHTML = Tugendane.nav("places");
+
+      const food = [
+        { name: "Simba Supermarket Café", meta: "Kicukiro Centre · 4 min", tag: "Quick bite" },
+        { name: "Heaven Restaurant", meta: "Kiyovu · 22 min by bus 201", tag: "Landmark meal" },
+        { name: "Meze Fresh", meta: "Kimihurura · 18 min", tag: "Casual" },
+        { name: "Nyamirambo Women’s Centre Café", meta: "Nyamirambo · 28 min", tag: "Local" },
+      ];
+      const places = [
+        { name: "Kigali Convention Centre", meta: "Gold dome — easy to spot from KN 3" },
+        { name: "Inema Arts Center", meta: "Kimihurura · art courtyard" },
+        { name: "Nyabugogo Terminal", meta: "Main long-distance park" },
+        { name: "Camp Kigali / Belgium Peacekeepers", meta: "Town orientation point" },
+        { name: "Kimironko Market", meta: "East-side hub · buses 305 / 311" },
+      ];
+
+      document.getElementById("food").innerHTML = food
+        .map(
+          (item) => `
+          <article class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h3 class="text-sm font-bold text-white">${item.name}</h3>
+                <p class="text-xs text-emerald-100/65">${item.meta}</p>
+              </div>
+              <span class="rounded-full bg-sky-400/15 px-2 py-1 text-[10px] font-bold text-sky-200">${item.tag}</span>
+            </div>
+          </article>`
+        )
+        .join("");
+
+      document.getElementById("places").innerHTML = places
+        .map(
+          (item) => `
+          <article class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+            <h3 class="text-sm font-bold text-white">${item.name}</h3>
+            <p class="text-xs text-emerald-100/65">${item.meta}</p>
+          </article>`
+        )
+        .join("");
+    </script>
+  </body>
+</html>
